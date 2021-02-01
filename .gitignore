@@ -1,0 +1,7 @@
+/venv
+/__pycache__
+/.idea
+/application/__pycache__
+coverage.xml
+.coverage
+/tests/__pycache__
