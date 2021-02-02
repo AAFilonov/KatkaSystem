@@ -12,7 +12,7 @@ def index():
     user = {'username': 'test'}
     database = db.db_open()
     db_cursor = database.cursor()
-    db_cursor.execute('SELECT 1')
+    db_cursor.execute('SELECT * from users')
     records = db_cursor.fetchall()
     db_cursor.close()
 
