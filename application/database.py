@@ -1,4 +1,4 @@
-import psycopg2
+from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
 from urllib.parse import urlparse
