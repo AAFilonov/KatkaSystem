@@ -1,13 +1,13 @@
 from application import db, login
 import werkzeug.security as security
 import flask_login
-from typing import Final
+
 
 
 class User(flask_login.UserMixin, db.Model):
     # статические константы для опредления классов
-    ROLE_USER: Final = 1
-    ROLE_ADMIN: Final = 2
+    ROLE_USER = 1
+    ROLE_ADMIN = 2
 
     # поля класса
     id = db.Column(db.Integer, primary_key=True)
@@ -23,7 +23,6 @@ class User(flask_login.UserMixin, db.Model):
 
     def check_password(self, password):
         return security.check_password_hash(self.password_hash, password)
-
 
 
     def __repr__(self):
