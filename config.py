@@ -1,8 +1,8 @@
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-DB_USER = 'postgres'
-DB_PASS = 'pass'
+DB_USER = 'ubuntudev'
+DB_PASS = 'aveemperor1'
 DB_HOST = 'localhost'
 DB_PORT = '5432'
 DB_NAME = '/test_db'
