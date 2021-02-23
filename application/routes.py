@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import *
 
-from flask_login import current_user, login_user ,logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from application.models import User
 import application.forms as Forms
 from application import app, db
@@ -9,11 +9,11 @@ from application import app, db
 from flask import request
 from werkzeug.urls import url_parse
 
+
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-
     return render_template('index.html', user=current_user, title='Home Page')
 
 
@@ -61,3 +61,8 @@ def admin():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)

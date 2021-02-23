@@ -13,7 +13,7 @@ login = LoginManager(app)
 login.login_view = 'login'
 
 from application import routes, models
-
+import  application.api.v1_0.user
 
 
 # TODO перевод фронтенда на реакт?
