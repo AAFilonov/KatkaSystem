@@ -2,7 +2,7 @@
 from flask import *
 
 from flask_login import current_user, login_user, logout_user, login_required
-from application.models import User
+from application.Models.m_user import User
 import application.forms as Forms
 from application import app, db
 
@@ -41,7 +41,7 @@ def register():
         return redirect(url_for('index'))
     form = Forms.RegistrationForm()
     if form.validate_on_submit():
-        user = User.init(None, username=form.username.data, password=form.password.data, role=User.ROLE_USER)
+        user = User.init( username=form.username.data, password=form.password.data)
 
         db.session.add(user)
         db.session.commit()
@@ -53,13 +53,13 @@ def register():
 @app.route('/admin')
 @login_required
 def admin():
-    return redirect(url_for('admin'))
+    return render_template('admin.html', title='Admin Page')
 
 
 @app.route('/settings')
 @login_required
 def settings():
-    return redirect(url_for('settings'))
+    return render_template('Setting.html', title='Settings')
 
 
 @app.route('/logout')
@@ -70,5 +70,5 @@ def logout():
 
 
 @app.errorhandler(404)
-def not_found(error):
+def not_found():
     return make_response(jsonify({'error': 'Not found'}), 404)

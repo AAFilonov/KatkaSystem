@@ -3,7 +3,6 @@ import werkzeug.security as security
 import flask_login
 
 import json
-from json import JSONEncoder
 
 
 class User(flask_login.UserMixin, db.Model):
@@ -44,10 +43,11 @@ class User(flask_login.UserMixin, db.Model):
         десериализовать json
         """
         usr_dict = json.loads(usr_json)
-        usr = User(
-            usr_dict['id'],
+        usr = User.init(
+
             usr_dict['username'],
             usr_dict['password'],
+            usr_dict['id'],
             usr_dict['role']
         )
         return usr
@@ -71,16 +71,29 @@ class User(flask_login.UserMixin, db.Model):
         return usr
 
     @staticmethod
-    def init(self, id, username, password, role=ROLE_USER):
+    def init(username, password, id=None, role=ROLE_USER):
         """
         инициализатор всем параметрам
         """
-        usr = User(id, username, password, role)
+        usr = User(id, username, password,  role)
         return usr
+
+    def __init__(self,id, username, password,  role=ROLE_USER):
+        self.id =id
+        self.username=username
+        self.set_password(password)
+        self.role=role
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
+
+
+"""
 
 class UserEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -89,12 +102,8 @@ class UserEncoder(json.JSONEncoder):
         return super().default(obj)
 
 
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
 
-"""
-       @login.request_loader
+@login.request_loader
 def load_user(request):
     token = request.headers.get('Authorization')
     if token is None:

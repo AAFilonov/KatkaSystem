@@ -1,5 +1,5 @@
 from unittest import TestCase
-from application.models import User, UserEncoder
+from application.Models.m_user import User
 import json
 
 
@@ -15,4 +15,4 @@ class TestUserSerialisation(TestCase):
         usr_json = '{"id": null, "role": 1, "password":"pass" ,"username": "test"}'
         usr = User.init_json(usr_json)
         print(usr)
-        self.assertEqual(usr, User(None, "test", "pass", 1))
+        self.assertEqual(usr, User.init("test", "pass"))
