@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-from psycopg2 import *
+
 from config import Config
 from contextlib import closing
 
