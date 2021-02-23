@@ -41,8 +41,8 @@ def register():
         return redirect(url_for('index'))
     form = Forms.RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, role=User.ROLE_USER)
-        user.set_password(form.password.data)
+        user = User.init(None, username=form.username.data, password=form.password.data, role=User.ROLE_USER)
+
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
@@ -54,6 +54,12 @@ def register():
 @login_required
 def admin():
     return redirect(url_for('admin'))
+
+
+@app.route('/settings')
+@login_required
+def settings():
+    return redirect(url_for('settings'))
 
 
 @app.route('/logout')

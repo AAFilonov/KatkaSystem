@@ -3,7 +3,7 @@ import werkzeug.security as security
 import flask_login
 
 import json
-from json import  JSONEncoder
+from json import JSONEncoder
 
 
 class User(flask_login.UserMixin, db.Model):
@@ -16,9 +16,6 @@ class User(flask_login.UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     role = db.Column(db.Integer)
-
-
-
 
     def is_admin(self):
         return self.role == User.ROLE_ADMIN
@@ -38,28 +35,24 @@ class User(flask_login.UserMixin, db.Model):
             usr_dict['password'],
             usr_dict['role']
         )
-        return  usr
+        return usr
 
     def serialize(self):
         return {
-            "username":self.username,
+            "username": self.username,
             "role": self.role,
             "id": self.id
-                }
+        }
 
     @staticmethod
     def init_json(json_str):
-        print("deserialize")
         usr = User.deseialize(json_str)
         return usr
 
-
-    def __init__(self,id ,username,password, role= ROLE_USER):
-            self.id = id
-            self.username = username
-            self.role = role
-            self.set_password(password)
-
+    @staticmethod
+    def init(self, id, username, password, role=ROLE_USER):
+        usr = User(id,username,password,role)
+        return usr
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -70,8 +63,6 @@ class UserEncoder(json.JSONEncoder):
         if isinstance(obj, User):
             return obj.serialize()
         return super().default(obj)
-
-
 
 
 @login.user_loader

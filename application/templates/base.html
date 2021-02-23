@@ -5,8 +5,8 @@
     {% else %}
     <title>Katka</title>
     {% endif %}
-    <link rel="stylesheet" type="text/css" href="http://cdn.webix.com/edge/webix.css">
-<script type="text/javascript" src="http://cdn.webix.com/edge/webix.js"></script>
+    {% block header_links %}{% endblock %}
+
 
 </head>
 <body>
@@ -35,5 +35,6 @@
 {% endif %}
 {% endwith %}
 {% block content %}{% endblock %}
+  {% block end_links %}{% endblock %}
 </body>
 </html>
