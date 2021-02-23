@@ -7,6 +7,9 @@ from json import JSONEncoder
 
 
 class User(flask_login.UserMixin, db.Model):
+    """
+    Класс-модель для пользователей
+    """
     # статические константы для опредления классов
     ROLE_USER = 1
     ROLE_ADMIN = 2
@@ -18,16 +21,28 @@ class User(flask_login.UserMixin, db.Model):
     role = db.Column(db.Integer)
 
     def is_admin(self):
+        """
+        проверка явялется ли пользователь админом
+        """
         return self.role == User.ROLE_ADMIN
 
     def set_password(self, password):
+        """
+        заменить пароль
+        """
         self.password_hash = security.generate_password_hash(password)
 
     def check_password(self, password):
+        """
+        проверить пароль
+        """
         return security.check_password_hash(self.password_hash, password)
 
     @staticmethod
     def deseialize(usr_json):
+        """
+        десериализовать json
+        """
         usr_dict = json.loads(usr_json)
         usr = User(
             usr_dict['id'],
@@ -38,6 +53,9 @@ class User(flask_login.UserMixin, db.Model):
         return usr
 
     def serialize(self):
+        """
+        сериализовать экземпляр в json строку
+        """
         return {
             "username": self.username,
             "role": self.role,
@@ -46,12 +64,18 @@ class User(flask_login.UserMixin, db.Model):
 
     @staticmethod
     def init_json(json_str):
+        """
+        инициализатор по json строке
+        """
         usr = User.deseialize(json_str)
         return usr
 
     @staticmethod
     def init(self, id, username, password, role=ROLE_USER):
-        usr = User(id,username,password,role)
+        """
+        инициализатор всем параметрам
+        """
+        usr = User(id, username, password, role)
         return usr
 
     def __repr__(self):
@@ -69,8 +93,8 @@ class UserEncoder(json.JSONEncoder):
 def load_user(id):
     return User.query.get(int(id))
 
-
-@login.request_loader
+"""
+       @login.request_loader
 def load_user(request):
     token = request.headers.get('Authorization')
     if token is None:
@@ -79,18 +103,9 @@ def load_user(request):
     if token is not None:
         username, password = token.split(":")  # naive token
         user_entry = User.get(username)
-        if (user_entry is not None):
+        if user_entry is not None:
             user = User(user_entry[0], user_entry[1])
-            if (user.password == password):
+            if user.password == password:
                 return user
     return None
-
-
-class Character(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    body = db.Column(db.String(140))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-    def __repr__(self):
-        return '<Post {}>'.format(self.body)
+"""
