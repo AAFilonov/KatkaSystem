@@ -5,7 +5,7 @@ import json
 
 class TestUserSerialisation(TestCase):
     def test_serialize(self):
-        usr = User.init(None, "test", "pass", User.ROLE_USER)
+        usr = User.init("test", "pass")
         print(usr)
         usr_json = json.dumps(usr.serialize(), sort_keys=True)
         print(usr_json)

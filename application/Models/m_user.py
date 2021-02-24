@@ -75,17 +75,21 @@ class User(flask_login.UserMixin, db.Model):
         """
         инициализатор всем параметрам
         """
-        usr = User(id, username, password,  role)
+        usr = User(id=id, username=username, role=role)
+        usr.set_password(password)
         return usr
 
-    def __init__(self,id, username, password,  role=ROLE_USER):
+        """    
+        def __init__(self,id, username, password,  role=ROLE_USER):
         self.id =id
         self.username=username
         self.set_password(password)
         self.role=role
+        """
 
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
+
+def __repr__(self):
+    return '<User {}>'.format(self.username)
 
 
 @login.user_loader
