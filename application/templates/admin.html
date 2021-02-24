@@ -1,19 +1,17 @@
-{% extends "base.html" %}
-
-{% block header_links %}
+{% extends "base.html" %} {% block header_links %}
 <link rel="stylesheet" type="text/css" href="http://cdn.webix.com/edge/webix.css">
 <script type="text/javascript" src="http://cdn.webix.com/edge/webix.js"></script>
-{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %} {% block content %}
+
+<script type="text/javascript" src="{{
+    url_for('static', filename='js/data.js') }}"></script>
+<script type="text/javascript" src="{{
+    url_for('static', filename='js/admin.js') }}"></script>
 
 
-{% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {{data}}
-<a href="{{ url_for('settings') }}">Click to Register!</a>
+</script>
 
-{% endblock %}
 
-{% block end_links %}
 
-<script type="text/javascript" src="./application/js/admin.js"></script>
-{% endblock %}
+{% endblock %} {% block end_links %} {% endblock %}
