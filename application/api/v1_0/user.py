@@ -13,7 +13,8 @@ def get_users():
     users = [usr.serialize() for usr in users_obj]
     print(users)
     # json.dumps(users_obj.serialize(), sort_keys=True)
-    return {'users': users}
+    return {'users': users} 
+    
 
 
 @app.route('/api/v1.0/user/<int:user_id>', methods=['GET'])
