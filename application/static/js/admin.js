@@ -1,39 +1,10 @@
-webix.ui({
-    rows: [{
-        template: "Header"
-    }, {
-        cols: [{
-                template: "List"
-            },
-            {
-                view: "datatable",
-                id: "film_list",
-                scroll: "y",
-                autoConfig: true,
-                data: small_film_set
-            }, {
-                template: "Form"
-            }
-        ]
-    }, {
-        template: "Footer"
-    }]
-});
 $.ajax({
     type: "get",
     url: "./api/v1.0/user",
     data: {
 
     },
-    success: {
-        function(result) {
-            console.log("sucess");
-            console.log(result);
-
-
-        }
-
-    },
+    success: succes_handler,
     error: {
         function(result) {
             console.log("error");
@@ -42,3 +13,14 @@ $.ajax({
         }
     }
 });
+
+function succes_handler(result) {
+    console.log("sucess");
+    console.log(result);
+    webix.ui({
+        rows: [
+            { view: "template", type: "header", template: "My App!" },
+            { view: "datatable", autoConfig: true, data: result['users'] }
+        ]
+    });
+}
