@@ -12,6 +12,7 @@ def get_users():
     users_obj = list(User.query.all())
     users = [usr.serialize() for usr in users_obj]
     print(users)
+
     # json.dumps(users_obj.serialize(), sort_keys=True)
     return {'users': users} 
     
